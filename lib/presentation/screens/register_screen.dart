@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_translate/flutter_translate.dart';
 import 'package:sizer/sizer.dart';
+import 'package:web/business_logic/register_cubit/register_cubit.dart';
 import 'package:web/presentation/styles/colors.dart';
 import 'package:web/presentation/widgets/default_app_button.dart';
 import 'package:web/presentation/widgets/default_password_field.dart';
@@ -60,7 +61,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 Container(
                   padding: const EdgeInsets.all(20),
                   width: 400,
-                  height: 500,
+                  height: 670 ,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: AppColors.white,
@@ -124,7 +125,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               builder: (_) {
                                 return const LoadingDialog();
                               },
+                            ),
+
+                            RegisterCubit.get(context)
+                                .userRegister(
+                              name: server.text,
+                              server: company.text,
+                              email: email.text,
+                              password: password.text,
+                              phone: phone.text,
+                              afterSuccess: (){
+                                Navigator.pushNamed(context, "/login");
+                              },
+                              afterFail: (){
+                                Navigator.pop(context);
+                              },
                             )
+
                           };
                         },
                       ),
